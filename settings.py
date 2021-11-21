@@ -3,13 +3,11 @@ from tkinter import *
 from preview_frame import PreviewFrame
 from tools import setDefaults, widgetUpdate
 class Settings():
-    def __init__(self, root, main, padxMult, padyMult):
+    def __init__(self, root, padxMult, padyMult):
         self.root = root
-        self.mainScreen = main
         self.padxMult = padxMult
         self.padyMult = padyMult
         self.previewFrame = PreviewFrame(root, 4, 2, 1, 9, padxMult, padyMult)
-        self.currentScreen = 0
         self.colors = {
             "Default": {
                 "primary": "#5588FF",
@@ -49,8 +47,7 @@ class Settings():
         }
         
 
-        self.settingsButton = Button(root, text="Settings", command= self.screenSwitcher)
-        self.settingsButton.grid(column= 4, row=0, padx= (0, 25 * self.padxMult), sticky=E)
+        
 
 
         #Variable Storage
@@ -85,7 +82,7 @@ class Settings():
         saveJson = json.loads(json.dumps(payload))
         with open("./config.json", "w") as file:
             file.write(saveJson)
-        self.mainScreen.infoFrame.description.config(wraplength=round(522 * self.padxMult))   
+        #self.mainScreen.infoFrame.description.config(wraplength=round(522 * self.padxMult))   
         widgetUpdate(self.root)
           
 
@@ -97,22 +94,7 @@ class Settings():
         self.fontSelectedVar.set(settings["font"]["name"])
         self.isBoldVar.set(settings["font"]["isBold"])        
 
-    def screenSwitcher(self):
-        """Handles all action necessary when swithing between the two screen. This includes swithing the screens."""
-        #Settings -> MainScreen
-        if (self.currentScreen == 1):
-            self.hide()
-            self.previewFrame.Frame.grid_remove()
-            self.mainScreen.display()
-            self.currentScreen = 0
-        #MainScreen -> Settings
-        else:
-            #self.root.geometry(self.root.geometry())
-            self.mainScreen.hide()
-            self.display()
-            self.previewFrame.Frame.grid()
-            self.loadSettings()
-            self.currentScreen = 1
+    
     
     def previewFont(self, *args):
         if (self.isBoldVar.get()):
@@ -158,6 +140,7 @@ class Settings():
         self.isBold.grid_remove()
         self.defaultsButton.grid_remove()
         self.saveButton.grid_remove()
+        self.previewFrame.Frame.grid_remove()
 
     def display(self):
         pY = (0, 21 * self.padyMult)
@@ -170,3 +153,4 @@ class Settings():
         self.isBold.grid(row= 10, padx= 10 * self.padxMult, sticky= W)
         self.defaultsButton.grid(row= 12, pady=20 * self.padyMult, padx= (0, 25 * self.padxMult), sticky=E+S)
         self.saveButton.grid(column= 4,row=12, pady=(41 * self.padyMult, 20 * self.padyMult), padx= (0, 25 * self.padxMult), sticky=E+S)
+        self.previewFrame.Frame.grid()

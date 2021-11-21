@@ -37,14 +37,14 @@ class MainScreen():
         self.criteriaVar7.set("Any")
 
         ##Criteria Widgets
-        self.crit1 = OptionMenu(self.FRAMES[0], self.criteriaVar1, "Any", "Arcade", "Attractions", "Brewery", "Food Store", "Hospital", "Hotel", "Ice Cream Parlor", "Park", "Restaurant", "Shopping Center")
+        self.crit1 = OptionMenu(self.FRAMES[0], self.criteriaVar1, "Any", "Arcade", "Attractions", "Bar", "Brewery", "Food Store", "Hospital", "Hotel", "Ice Cream Parlor", "Movie Theater", "Park", "Restaurant", "Shopping Center")
         self.crit2 = OptionMenu(self.FRAMES[1], self.criteriaVar2, "Any", "Both","Indoor", "Outdoor")
         self.crit3 = OptionMenu(self.FRAMES[2], self.criteriaVar3, "Any", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
         self.crit4Num = OptionMenu(self.FRAMES[3], self.criteriaVar4, "Any", "24/7", "1", "2", "3", "4","5", "6","7", "8", "9", "10", "11", "12",)
         self.crit4Meridiem = OptionMenu(self.FRAMES[3], self.criteriaVar4Mer, "AM", "PM")
         self.crit5Num = OptionMenu(self.FRAMES[4], self.criteriaVar5, "Any","1", "2", "3", "4","5", "6","7", "8", "9", "10", "11", "12")
         self.crit5Meridiem = OptionMenu(self.FRAMES[4], self.criteriaVar5Mer, "AM", "PM")
-        self.crit6 = OptionMenu(self.FRAMES[5], self.criteriaVar6, "Any", "Altoona", "Duncansville", "Hollidaysburg", "Tyrone")
+        self.crit6 = OptionMenu(self.FRAMES[5], self.criteriaVar6, "Any", "Altoona", "Duncansville", "Hollidaysburg", "Roaring Spring", "Tyrone")
         self.crit7 = OptionMenu(self.FRAMES[6], self.criteriaVar7, "Any", "Less than $10", "Less than $25", "Less than $50", "Less than $100", "Less than $150")
 
         ##Criteria Widget Labels
