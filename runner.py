@@ -10,27 +10,31 @@ class windowManager():
 
         self.padx = screenAdjPadxMult(root)
         self.pady = screenAdjPadyMult(root)
-        self.mScreen = MainScreen(root, self.padx, self.pady)
-        self.sScreen = Settings(root, self.padx, self.pady)
+        self.mainScreen = MainScreen(root, self.padx, self.pady)
+        self.settingsScreen = Settings(root, self.padx, self.pady)
 
         self.settingsButton = Button(root, text="Settings", command= self.screenSwitcher)
         self.settingsButton.grid(column= 4, row=0, padx= (0, 25 * self.padx), sticky=E)
 
         widgetUpdate(root)
 
+        with open("config.json") as configs:
+            if (json.load(configs)["autoDay"]):
+                self.mainScreen.criteriaVar2.set(getCurrentDay())
+
     def screenSwitcher(self):
         """Handles all action necessary when swithing between the two screen. This includes swithing the screens."""
         #Settings -> MainScreen
         if (self.currentScreen == 1):
-            self.sScreen.hide()            
-            self.mScreen.display()
+            self.settingsScreen.hide()            
+            self.mainScreen.display()
             self.currentScreen = 0
         #MainScreen -> Settings
         else:
             #self.root.geometry(self.root.geometry())
-            self.mScreen.hide()
-            self.sScreen.display()
-            self.sScreen.loadSettings()
+            self.mainScreen.hide()
+            self.settingsScreen.display()
+            self.settingsScreen.loadSettings()
             self.currentScreen = 1
 
 if __name__ == "__main__":

@@ -5,14 +5,15 @@ from searcher import Searcher
 
 class MainScreen():
     def __init__(self, root: Tk, padxMult, padyMult):
-        self.root = root
         self.padxMult = padxMult
         self.padyMult = padyMult
         self.infoFrame = InfoFrame(root, 2, 1, 3, 7, padxMult, padyMult)
         self.searcher = Searcher(self.infoFrame)
         
         #Creates and stores 6 labelFrames inside to be used by the criteria
-        self.FRAMES = [LabelFrame(root, borderwidth=0, highlightthickness=0), LabelFrame(root, borderwidth=0, highlightthickness=0), LabelFrame(root, borderwidth=0, highlightthickness=0), LabelFrame(root, borderwidth=0, highlightthickness=0), LabelFrame(root, borderwidth=0, highlightthickness=0), LabelFrame(root, borderwidth=0, highlightthickness=0), LabelFrame(root, borderwidth=0, highlightthickness=0)]
+        self.FRAMES = []
+        for x in range(7): #Number is how many frames will be created
+            self.FRAMES.append(LabelFrame(root, borderwidth=0, highlightthickness=0))  
 
         ##Defines the criteria Variables
         self.criteriaVar1 = StringVar() 
@@ -57,7 +58,9 @@ class MainScreen():
         self.crit7Label = Label(self.FRAMES[6], text= "Approxiate Price range")
 
         ##Images
+        #loads image
         self.logo_img = ImageTk.PhotoImage(Image.open("./images/logo.png").resize((round(128 * self.padxMult), round(128 * self.padyMult)), Image.ANTIALIAS))
+        #sets image
         self.logo = Label(root, image=self.logo_img)
 
         #Buttons
@@ -69,7 +72,7 @@ class MainScreen():
         #Info Frame
         self.infoFrameViewing = Label(root)
         self.Search()
-        #---------------Grid Placement--------------#
+        
         self.display()
                 
 

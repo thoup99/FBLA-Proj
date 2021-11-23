@@ -1,60 +1,21 @@
 import json
 from tkinter import *
 from preview_frame import PreviewFrame
-from tools import setDefaults, widgetUpdate
+from tools import setDefaults, widgetUpdate, colors
 class Settings():
     def __init__(self, root, padxMult, padyMult):
         self.root = root
         self.padxMult = padxMult
         self.padyMult = padyMult
-        self.previewFrame = PreviewFrame(root, 4, 2, 1, 9, padxMult, padyMult)
-        self.colors = {
-            "Default": {
-                "primary": "#5588FF",
-                "secondary": "#91BAD6",
-                "bg": "#EBEDF3",
-                "text": "#000000",
-                "textDisabled": "#666666"
-            },
-            "High Contrast": {
-                "primary": "#f33bee",
-                "secondary": "#f33bee",
-                "bg": "#000000",
-                "text": "#FFFFFF",
-                "textDisabled": "#000000"
-            },
-            "Fall": {
-                "primary": "#F3BC2E",
-                "secondary": "#D45B12",
-                "bg": "#603C14",
-                "text": "#000000",
-                "textDisabled": "#9C2706"
-            },
-            "Sunset": {
-                "primary": "#DC5563",
-                "secondary": "#6C5B7B",
-                "bg": "#355C7D",
-                "text": "#FF9506",
-                "textDisabled": "#C06C84"
-            },
-            "Retro": { #https://www.figma.com/community/file/1004727401971389237
-                "primary": "#D2A24C",
-                "secondary": "#CC6B49",
-                "bg": "#6F5643",
-                "text": "#ECE6C2",
-                "textDisabled": "#73BDAB"
-            }
-        }
-        
-
-        
+        self.previewFrame = PreviewFrame(root, 4, 2, 1, 10, padxMult, padyMult)
 
 
         #Variable Storage
         self.colorSchemeVar = StringVar()
         self.fontSelectedVar = StringVar()
         self.isBoldVar = BooleanVar()
-        self.fontSizeVar =StringVar()
+        self.fontSizeVar = StringVar()
+        self.isAutoDayVar = BooleanVar()
 
         #Label Creation
         self.colorSchemePrompt = Label(root, text="Color Scheme")
@@ -69,6 +30,7 @@ class Settings():
         self.isBold = Checkbutton(root, text= "Bold", variable= self.isBoldVar)
         self.defaultsButton = Button(root, text="Restore Defaults", command=self.restoreDefault, padx= 25 * padxMult, pady= 5 * padyMult)
         self.saveButton = Button(root, text="Save", command=self.saveSettings, padx= 25 * padxMult, pady= 5 * padyMult)
+        self.isAutoDay = Checkbutton(root, text="Autofill Day" ,variable= self.isAutoDayVar, )
 
         self.fontSelectedVar.trace("w", self.previewFont)
         self.fontSizeVar.trace("w", self.previewFont)
@@ -76,37 +38,33 @@ class Settings():
         self.colorSchemeVar.trace("w", self.previewColor)
 
     def saveSettings(self):
-        sColor = self.colors[self.colorSchemeVar.get()]
-        payload = '{"font": {"size": '+self.fontSizeVar.get() + ', "name": "'+self.fontSelectedVar.get()+ '", "isBold": '+str(self.isBoldVar.get()).lower()+'},"color": {"name": "'+self.colorSchemeVar.get()+ '", "primary": "'+sColor["primary"]+'", "secondary": "'+sColor["secondary"]+ '", "bg": "'+sColor["bg"]+ '", "text": "'+sColor["text"]+ '", "textDisabled": "'+sColor["textDisabled"]+'"} }'
+        payload = '{"font": {"size": '+self.fontSizeVar.get() + ', "name": "'+self.fontSelectedVar.get()+ '", "isBold": '+str(self.isBoldVar.get()).lower()+'},"colorScheme": "'+ self.colorSchemeVar.get()+'", "autoDay": '+str(self.isAutoDayVar.get()).lower()+'}'
         
         saveJson = json.loads(json.dumps(payload))
         with open("./config.json", "w") as file:
             file.write(saveJson)
-        #self.mainScreen.infoFrame.description.config(wraplength=round(522 * self.padxMult))   
-        widgetUpdate(self.root)
-          
+        widgetUpdate(self.root)          
 
     def loadSettings(self):
-        with open("./config.json") as settings:
-            settings = json.load(settings)
-        self.colorSchemeVar.set(settings["color"]["name"])
+        with open("./config.json") as jsonData:
+            settings = json.load(jsonData)
+        self.colorSchemeVar.set(settings["colorScheme"])
         self.fontSizeVar.set(str(settings["font"]["size"]))
         self.fontSelectedVar.set(settings["font"]["name"])
-        self.isBoldVar.set(settings["font"]["isBold"])        
-
-    
+        self.isBoldVar.set(settings["font"]["isBold"])
+        self.isAutoDayVar.set(settings["autoDay"])            
     
     def previewFont(self, *args):
         if (self.isBoldVar.get()):
-            nFont = (self.fontSelectedVar.get(), int(self.fontSizeVar.get()), 'bold')
-        else: nFont = (self.fontSelectedVar.get(), int(self.fontSizeVar.get()))
-        self.previewFrame.Frame.config(font= nFont)
-        self.previewFrame.text.config(font= nFont)
-        self.previewFrame.optionMenu.config(font= nFont)
-        self.previewFrame.button.config(font= nFont)    
+            newFont = (self.fontSelectedVar.get(), int(self.fontSizeVar.get()), 'bold')
+        else: newFont = (self.fontSelectedVar.get(), int(self.fontSizeVar.get()))
+        self.previewFrame.Frame.config(font= newFont)
+        self.previewFrame.text.config(font= newFont)
+        self.previewFrame.optionMenu.config(font= newFont)
+        self.previewFrame.button.config(font= newFont)    
 
     def previewColor(self, *args):
-        colorData = self.colors[self.colorSchemeVar.get()]
+        colorData = colors[self.colorSchemeVar.get()]
         self.previewFrame.Frame.config(bg= colorData["bg"],
             fg= colorData["text"])
         self.previewFrame.text.config(bg= colorData["bg"], 
@@ -140,6 +98,7 @@ class Settings():
         self.isBold.grid_remove()
         self.defaultsButton.grid_remove()
         self.saveButton.grid_remove()
+        self.isAutoDay.grid_remove()
         self.previewFrame.Frame.grid_remove()
 
     def display(self):
@@ -151,6 +110,7 @@ class Settings():
         self.fontPromt.grid(row= 7, padx= 12 * self.padxMult, sticky= W)
         self.fontSize.grid(row= 8, padx= 10 * self.padxMult, pady = pY,sticky= W)
         self.isBold.grid(row= 10, padx= 10 * self.padxMult, sticky= W)
+        self.isAutoDay.grid(row= 11, padx= 10 * self.padxMult, sticky= W)
         self.defaultsButton.grid(row= 12, pady=20 * self.padyMult, padx= (0, 25 * self.padxMult), sticky=E+S)
         self.saveButton.grid(column= 4,row=12, pady=(41 * self.padyMult, 20 * self.padyMult), padx= (0, 25 * self.padxMult), sticky=E+S)
         self.previewFrame.Frame.grid()

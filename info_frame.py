@@ -24,12 +24,12 @@ class InfoFrame():
         ##Creates the widgets we will use
         self.locationImage = ImageTk.PhotoImage(Image.open('./images/NoResults.jpg'))
         self.image = Label(self.Frame, image= self.locationImage)
-        self.locName = Label(self.Frame, text= "Location Name")
-        self.inOut = Label(self.Frame, text= "In/Outdoor")
-        self.tags = Label(self.Frame, text="Tags")
-        self.hours = Label(self.Frame, text="Hours")
-        self.closedOn = Label(self.Frame, text="Closed On")
-        self.location = Label(self.Frame, text="Exact Location")
+        self.locName = Label(self.Frame, text= "Location Name", justify=LEFT, wraplength=round(522 * self.padxMult))
+        self.inOut = Label(self.Frame, text= "In/Outdoor", justify=LEFT, wraplength=round(522 * self.padxMult))
+        self.tags = Label(self.Frame, text="Tags", justify=LEFT, wraplength=round(522 * self.padxMult))
+        self.hours = Label(self.Frame, text="Hours", justify=LEFT, wraplength=round(522 * self.padxMult))
+        self.closedOn = Label(self.Frame, text="Closed On", justify=LEFT, wraplength=round(522 * self.padxMult))
+        self.location = Label(self.Frame, text="Exact Location", justify=LEFT, wraplength=round(522 * self.padxMult))
         self.description = Label(self.Frame, text="Description", justify=LEFT, wraplength=round(522 * self.padxMult))
         self.googleBut = Button(self.Frame, text="Open in Google", command= self.openGoogle ,pady= 8 * self.padyMult, padx= 15 * padxMult)
 
@@ -90,30 +90,20 @@ class InfoFrame():
 
     def specialHoursFormat(self, day, specialHours, normalOpen, normalClose) -> str:
         """Formats the hours that will be displayed on the infoframe whenever there are special hours for the selected day"""
-        normalOpen = self.militaryToString(normalOpen)
-        normalClose = self.militaryToString(normalClose)
-        specialOpen = ""
-        specialClose = ""
-        formatedTime = "Hours: "
+        openTime = self.militaryToString(normalOpen)
+        closeTime = self.militaryToString(normalClose)
         #Formats special open/close if there is one
-        for spHour in specialHours:
-            if spHour[0] == day and spHour[1] == "open":
-                specialOpen = self.militaryToString(spHour[2])
+        for Hour in specialHours:
+            if Hour[0] == day and Hour[1] == "open":
+                openTime = self.militaryToString(Hour[2])
                 break
-        for spHour in specialHours:
-            if spHour[0] == day and spHour[1] == "close":
-                specialClose = self.militaryToString(spHour[2])
+            
+        for Hour in specialHours:
+            if Hour[0] == day and Hour[1] == "close":
+                closeTime = self.militaryToString(Hour[2])
                 break
-        #Uses the special hours if any are present otherwise normal ones are used
-        if (len(specialOpen) > 0):
-            formatedTime += specialOpen
-        else:
-            formatedTime += normalOpen
-        formatedTime += " - "
-        if (len(specialClose) > 0):
-            return(formatedTime + specialClose)
-        else:
-            return(formatedTime + normalClose)
+        
+        return ("Hours: " + openTime + " - " + closeTime)
         
     def militaryToString(self, time):
         if (time == 0):

@@ -1,4 +1,6 @@
+from ast import Str
 from tkinter import *
+from datetime import datetime
 import json
 
 def screenAdjFont(root):
@@ -14,16 +16,16 @@ def screenAdjPadyMult(root):
     return(root.winfo_screenheight() / 98.18 / 11)
 
 def setDefaults(root):
-    payload = '{"font": {"size": '+str(screenAdjFont(root))+', "name": "Helvetica", "isBold": true}, "color": {"name": "Default", "primary": "#5588FF", "secondary": "#91BAD6", "bg": "#EBEDF3", "text": "#000000", "textDisabled": "#666666"} }'
+    payload = '{"font": {"size": '+str(screenAdjFont(root))+', "name": "Helvetica", "isBold": true}, "colorScheme": "Default", "autoDay": true}'
     with open('./config.json', "w") as file:
         file.write(payload)
 
-def widgetUpdate(root) -> None:
+def widgetUpdate(root) -> dict:
     """Updates the font and colors of all the Widgets"""
     with open("config.json") as jsonData: #loads the config file
         configs = json.load(jsonData)
         fontData = configs["font"]
-        colorData = configs["color"]
+        colorData = colors[configs["colorScheme"]]
     #Constructs font
     if (fontData["isBold"]):
         sFont = (fontData["name"], fontData["size"], "bold")
@@ -78,7 +80,51 @@ def updateInstance(root, widget, colorData, Font, lFont):
     elif(isinstance(widget, Checkbutton)):
         widget.config(font= Font,
                 fg= colorData["text"],
-                bg= colorData["bg"])
+                bg= colorData["bg"],
+                activeforeground= colorData["text"],
+                activebackground= colorData["bg"])                
         if (colorData["primary"] == "#f33bee" or colorData["primary"] == "#D2A24C"):
             widget.config(font= lFont, 
                 fg= colorData["primary"])
+
+colors = {
+            "Default": {
+                "primary": "#5588FF",
+                "secondary": "#91BAD6",
+                "bg": "#EBEDF3",
+                "text": "#000000",
+                "textDisabled": "#666666"
+            },
+            "High Contrast": {
+                "primary": "#f33bee",
+                "secondary": "#f33bee",
+                "bg": "#000000",
+                "text": "#FFFFFF",
+                "textDisabled": "#000000"
+            },
+            "Fall": {
+                "primary": "#F3BC2E",
+                "secondary": "#D45B12",
+                "bg": "#603C14",
+                "text": "#000000",
+                "textDisabled": "#9C2706"
+            },
+            "Sunset": {
+                "primary": "#DC5563",
+                "secondary": "#6C5B7B",
+                "bg": "#355C7D",
+                "text": "#FF9506",
+                "textDisabled": "#C06C84"
+            },
+            "Retro": { #https://www.figma.com/community/file/1004727401971389237
+                "primary": "#D2A24C",
+                "secondary": "#CC6B49",
+                "bg": "#6F5643",
+                "text": "#ECE6C2",
+                "textDisabled": "#73BDAB"
+            }
+        }
+
+def getCurrentDay():
+    weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    return weekdays[datetime.today().isoweekday()]
