@@ -3,6 +3,7 @@ from mainScreen import MainScreen
 from settings import Settings
 from tools import *
 from os.path import exists
+import json
 
 class windowManager():
     def __init__(self, root) -> None:
@@ -16,12 +17,15 @@ class windowManager():
         self.settingsButton = Button(root, text="Settings", command= self.screenSwitcher)
         self.settingsButton.grid(column= 4, row=0, padx= (0, 25 * self.padx), sticky=E)
 
-        widgetUpdate(root)
-
-        with open("config.json") as configs:
-            if (json.load(configs)["autoDay"]):
-                self.mainScreen.criteriaVar2.set(getCurrentDay())
-
+        with open("config.json") as jsonData:
+            configs = json.load(jsonData)
+            fontData = configs["font"]
+            colorData = colors[configs["colorScheme"]]
+            widgetUpdate(root, fontData, colorData)
+            if (configs["autoDay"]):
+                self.mainScreen.criteriaVar3.set(getCurrentDay())
+            self.mainScreen.Search()
+            
     def screenSwitcher(self):
         """Handles all action necessary when swithing between the two screen. This includes swithing the screens."""
         #Settings -> MainScreen

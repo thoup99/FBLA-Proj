@@ -32,19 +32,20 @@ class Settings():
         self.saveButton = Button(root, text="Save", command=self.saveSettings, padx= 25 * padxMult, pady= 5 * padyMult)
         self.isAutoDay = Checkbutton(root, text="Autofill Day" ,variable= self.isAutoDayVar, )
 
-        self.fontSelectedVar.trace("w", self.previewFont)
-        self.fontSizeVar.trace("w", self.previewFont)
-        self.isBoldVar.trace("w", self.previewFont)
-        self.colorSchemeVar.trace("w", self.previewColor)
+        self.fontSelectedVar.trace("w", self.previewUpdate)
+        self.fontSizeVar.trace("w", self.previewUpdate)
+        self.isBoldVar.trace("w", self.previewUpdate)
+        self.colorSchemeVar.trace("w", self.previewUpdate)
 
     def saveSettings(self):
         payload = '{"font": {"size": '+self.fontSizeVar.get() + ', "name": "'+self.fontSelectedVar.get()+ '", "isBold": '+str(self.isBoldVar.get()).lower()+'},"colorScheme": "'+ self.colorSchemeVar.get()+'", "autoDay": '+str(self.isAutoDayVar.get()).lower()+'}'
         
-        saveJson = json.loads(json.dumps(payload))
         with open("./config.json", "w") as file:
-            file.write(saveJson)
-        widgetUpdate(self.root)          
-
+            file.write(payload)
+        with open("./config.json") as jsonData:
+            configs = json.load(jsonData)
+            widgetUpdate(self.root, configs["font"], colors[configs["colorScheme"]])
+            
     def loadSettings(self):
         with open("./config.json") as jsonData:
             settings = json.load(jsonData)
@@ -53,34 +54,14 @@ class Settings():
         self.fontSelectedVar.set(settings["font"]["name"])
         self.isBoldVar.set(settings["font"]["isBold"])
         self.isAutoDayVar.set(settings["autoDay"])            
-    
-    def previewFont(self, *args):
-        if (self.isBoldVar.get()):
-            newFont = (self.fontSelectedVar.get(), int(self.fontSizeVar.get()), 'bold')
-        else: newFont = (self.fontSelectedVar.get(), int(self.fontSizeVar.get()))
-        self.previewFrame.Frame.config(font= newFont)
-        self.previewFrame.text.config(font= newFont)
-        self.previewFrame.optionMenu.config(font= newFont)
-        self.previewFrame.button.config(font= newFont)    
 
-    def previewColor(self, *args):
-        colorData = colors[self.colorSchemeVar.get()]
-        self.previewFrame.Frame.config(bg= colorData["bg"],
-            fg= colorData["text"])
-        self.previewFrame.text.config(bg= colorData["bg"], 
-            fg= colorData["text"])
-        self.previewFrame.optionMenu['menu'].config(bg= colorData["secondary"], fg= colorData["text"])
-        self.previewFrame.optionMenu.config(bg= colorData["secondary"],
-            fg= colorData["text"],
-            highlightbackground= colorData["bg"], 
-            highlightcolor= colorData["bg"],
-            activebackground= colorData["primary"],
-            activeforeground= colorData["text"])
-        self.previewFrame.button.config(bg= colorData["primary"],
-            fg= colorData["text"],
-            activebackground= colorData["secondary"],
-            activeforeground= colorData["textDisabled"],
-            disabledforeground= colorData["textDisabled"])
+    def previewUpdate(self, *args):
+        newFont = {
+            "size": int(self.fontSizeVar.get()),
+            "name": self.fontSelectedVar.get(), 
+            "isBold": self.isBoldVar.get()
+        }
+        widgetUpdate(self.previewFrame.Frame, newFont, colorData = colors[self.colorSchemeVar.get()])
 
     def restoreDefault(self):
         setDefaults(self.root)

@@ -1,7 +1,5 @@
-from ast import Str
 from tkinter import *
 from datetime import datetime
-import json
 
 def screenAdjFont(root):
     """Returns the recommended font size based on the screens height"""
@@ -20,19 +18,15 @@ def setDefaults(root):
     with open('./config.json', "w") as file:
         file.write(payload)
 
-def widgetUpdate(root) -> dict:
-    """Updates the font and colors of all the Widgets"""
-    with open("config.json") as jsonData: #loads the config file
-        configs = json.load(jsonData)
-        fontData = configs["font"]
-        colorData = colors[configs["colorScheme"]]
+def widgetUpdate(root, fontData, colorData) -> None:
+    """Updates widgets in desired location with given font and color data"""
     #Constructs font
     if (fontData["isBold"]):
         sFont = (fontData["name"], fontData["size"], "bold")
-        largeFont = (fontData["name"], fontData["size"] + 5, "bold")
+        largeFont = (fontData["name"], fontData["size"] + 4, "bold")
     else: 
         sFont = (fontData["name"], fontData["size"], "normal")
-        largeFont = (fontData["name"], fontData["size"] + 5)
+        largeFont = (fontData["name"], fontData["size"] + 4)
     #Changes font and colors
     root.config(bg= colorData["bg"])
     for widget in root.winfo_children():
@@ -47,13 +41,9 @@ def updateInstance(root, widget, colorData, Font, lFont):
         for subWidget in widget.winfo_children():
             updateInstance(root, subWidget, colorData, Font, lFont)
     elif(isinstance(widget, Label)):
-        if (not all(letter == " " for letter in widget.cget("text"))): #Check if the text of the label is just spaces
             widget.config(bg= colorData["bg"], 
                 fg= colorData["text"], 
                 font= Font)
-        else: 
-            widget.config(bg= colorData["bg"],
-                fg= colorData["text"])
     elif(isinstance(widget, OptionMenu)):
         widget.config(font= Font,
             bg= colorData["secondary"],

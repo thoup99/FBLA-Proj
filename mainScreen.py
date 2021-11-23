@@ -71,7 +71,6 @@ class MainScreen():
 
         #Info Frame
         self.infoFrameViewing = Label(root)
-        self.Search()
         
         self.display()
                 
