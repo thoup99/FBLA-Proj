@@ -1,7 +1,7 @@
 import json
 from tkinter import *
 from preview_frame import PreviewFrame
-from tools import setDefaults, widgetUpdate, colors
+from tools import getColorScheme, setDefaults, widgetUpdate
 class Settings():
     def __init__(self, root, padxMult, padyMult):
         self.root = root
@@ -44,7 +44,7 @@ class Settings():
             file.write(payload)
         with open("./config.json") as jsonData:
             configs = json.load(jsonData)
-            widgetUpdate(self.root, configs["font"], colors[configs["colorScheme"]])
+            widgetUpdate(self.root, configs["font"], getColorScheme(configs["colorScheme"]))
             
     def loadSettings(self):
         with open("./config.json") as jsonData:
@@ -61,7 +61,7 @@ class Settings():
             "name": self.fontSelectedVar.get(), 
             "isBold": self.isBoldVar.get()
         }
-        widgetUpdate(self.previewFrame.Frame, newFont, colorData = colors[self.colorSchemeVar.get()])
+        widgetUpdate(self.previewFrame.Frame, newFont, colorData = getColorScheme(self.colorSchemeVar.get()))
 
     def restoreDefault(self):
         setDefaults(self.root)

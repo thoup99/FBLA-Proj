@@ -77,43 +77,45 @@ def updateInstance(root, widget, colorData, Font, lFont):
             widget.config(font= lFont, 
                 fg= colorData["primary"])
 
-colors = {
-            "Default": {
-                "primary": "#5588FF",
-                "secondary": "#91BAD6",
-                "bg": "#EBEDF3",
-                "text": "#000000",
-                "textDisabled": "#666666"
-            },
-            "High Contrast": {
-                "primary": "#f33bee",
-                "secondary": "#f33bee",
-                "bg": "#000000",
-                "text": "#FFFFFF",
-                "textDisabled": "#000000"
-            },
-            "Fall": {
-                "primary": "#F3BC2E",
-                "secondary": "#D45B12",
-                "bg": "#603C14",
-                "text": "#000000",
-                "textDisabled": "#9C2706"
-            },
-            "Sunset": {
-                "primary": "#DC5563",
-                "secondary": "#6C5B7B",
-                "bg": "#355C7D",
-                "text": "#FF9506",
-                "textDisabled": "#C06C84"
-            },
-            "Retro": { #https://www.figma.com/community/file/1004727401971389237
-                "primary": "#D2A24C",
-                "secondary": "#CC6B49",
-                "bg": "#6F5643",
-                "text": "#ECE6C2",
-                "textDisabled": "#73BDAB"
+def getColorScheme(schemeName):
+    colors = {
+                "Default": {
+                    "primary": "#5588FF",
+                    "secondary": "#91BAD6",
+                    "bg": "#EBEDF3",
+                    "text": "#000000",
+                    "textDisabled": "#666666"
+                },
+                "High Contrast": {
+                    "primary": "#f33bee",
+                    "secondary": "#f33bee",
+                    "bg": "#000000",
+                    "text": "#FFFFFF",
+                    "textDisabled": "#000000"
+                },
+                "Fall": {
+                    "primary": "#F3BC2E",
+                    "secondary": "#D45B12",
+                    "bg": "#603C14",
+                    "text": "#000000",
+                    "textDisabled": "#9C2706"
+                },
+                "Sunset": {
+                    "primary": "#DC5563",
+                    "secondary": "#6C5B7B",
+                    "bg": "#355C7D",
+                    "text": "#FF9506",
+                    "textDisabled": "#C06C84"
+                },
+                "Retro": { #https://www.figma.com/community/file/1004727401971389237
+                    "primary": "#D2A24C",
+                    "secondary": "#CC6B49",
+                    "bg": "#6F5643",
+                    "text": "#ECE6C2",
+                    "textDisabled": "#73BDAB"
+                }
             }
-        }
+    return (colors[schemeName])
 
 def getCurrentDay():
     weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]

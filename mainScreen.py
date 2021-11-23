@@ -16,46 +16,46 @@ class MainScreen():
             self.FRAMES.append(LabelFrame(root, borderwidth=0, highlightthickness=0))  
 
         ##Defines the criteria Variables
-        self.criteriaVar1 = StringVar() 
-        self.criteriaVar2 = StringVar()
-        self.criteriaVar3 = StringVar()
-        self.criteriaVar4 = StringVar()
-        self.criteriaVar4Mer = StringVar()
-        self.criteriaVar5 = StringVar()
-        self.criteriaVar5Mer = StringVar()
-        self.criteriaVar6 = StringVar()
-        self.criteriaVar7 =StringVar()
+        self.critServiceVar = StringVar() 
+        self.critInOutVar = StringVar()
+        self.critDayVar = StringVar()
+        self.critOpenNumVar = StringVar()
+        self.critOpenMerVar = StringVar()
+        self.critCloseNumVar = StringVar()
+        self.critCloseMerVar = StringVar()
+        self.critLocatedVar = StringVar()
+        self.critPriceVar =StringVar()
 
         ##Sets the criteria Variables
-        self.criteriaVar1.set("Any")
-        self.criteriaVar2.set("Any")
-        self.criteriaVar3.set("Any")
-        self.criteriaVar4.set("Any")
-        self.criteriaVar4Mer.set("AM")
-        self.criteriaVar5.set("Any")
-        self.criteriaVar5Mer.set("AM")
-        self.criteriaVar6.set("Any")
-        self.criteriaVar7.set("Any")
+        self.critServiceVar.set("Any")
+        self.critInOutVar.set("Any")
+        self.critDayVar.set("Any")
+        self.critOpenNumVar.set("Any")
+        self.critOpenMerVar.set("AM")
+        self.critCloseNumVar.set("Any")
+        self.critCloseMerVar.set("AM")
+        self.critLocatedVar.set("Any")
+        self.critPriceVar.set("Any")
 
         ##Criteria Widgets
-        self.crit1 = OptionMenu(self.FRAMES[0], self.criteriaVar1, "Any", "Arcade", "Attractions", "Bar", "Brewery", "Food Store", "Hospital", "Hotel", "Ice Cream Parlor", "Movie Theater", "Park", "Restaurant", "Shopping Center")
-        self.crit2 = OptionMenu(self.FRAMES[1], self.criteriaVar2, "Any", "Both","Indoor", "Outdoor")
-        self.crit3 = OptionMenu(self.FRAMES[2], self.criteriaVar3, "Any", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
-        self.crit4Num = OptionMenu(self.FRAMES[3], self.criteriaVar4, "Any", "24/7", "1", "2", "3", "4","5", "6","7", "8", "9", "10", "11", "12",)
-        self.crit4Meridiem = OptionMenu(self.FRAMES[3], self.criteriaVar4Mer, "AM", "PM")
-        self.crit5Num = OptionMenu(self.FRAMES[4], self.criteriaVar5, "Any","1", "2", "3", "4","5", "6","7", "8", "9", "10", "11", "12")
-        self.crit5Meridiem = OptionMenu(self.FRAMES[4], self.criteriaVar5Mer, "AM", "PM")
-        self.crit6 = OptionMenu(self.FRAMES[5], self.criteriaVar6, "Any", "Altoona", "Duncansville", "Hollidaysburg", "Roaring Spring", "Tyrone")
-        self.crit7 = OptionMenu(self.FRAMES[6], self.criteriaVar7, "Any", "Less than $10", "Less than $25", "Less than $50", "Less than $100", "Less than $150")
+        self.critService = OptionMenu(self.FRAMES[0], self.critServiceVar, "Any", "Arcade", "Attractions", "Bar", "Brewery", "Food Store", "Hospital", "Hotel", "Ice Cream Parlor", "Movie Theater", "Park", "Restaurant", "Shopping Center")
+        self.critInOut = OptionMenu(self.FRAMES[1], self.critInOutVar, "Any", "Both","Indoor", "Outdoor")
+        self.critDay = OptionMenu(self.FRAMES[2], self.critDayVar, "Any", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+        self.critOpenNum = OptionMenu(self.FRAMES[3], self.critOpenNumVar, "Any", "24/7", "1", "2", "3", "4","5", "6","7", "8", "9", "10", "11", "12",)
+        self.critOpenMer = OptionMenu(self.FRAMES[3], self.critOpenMerVar, "AM", "PM")
+        self.critCloseNum = OptionMenu(self.FRAMES[4], self.critCloseNumVar, "Any","1", "2", "3", "4","5", "6","7", "8", "9", "10", "11", "12")
+        self.critCloseMer = OptionMenu(self.FRAMES[4], self.critCloseMerVar, "AM", "PM")
+        self.critLocated = OptionMenu(self.FRAMES[5], self.critLocatedVar, "Any", "Altoona", "Duncansville", "Hollidaysburg", "Roaring Spring", "Tyrone")
+        self.critPrice = OptionMenu(self.FRAMES[6], self.critPriceVar, "Any", "Less than $10", "Less than $25", "Less than $50", "Less than $100", "Less than $150")
 
         ##Criteria Widget Labels
-        self.crit1Label = Label(self.FRAMES[0], text="Type of Service")
-        self.crit2Label = Label(self.FRAMES[1], text="Indoor/Outdoor Facility")
-        self.crit3Label = Label(self.FRAMES[2], text="Days of Operation")
-        self.crit4Label = Label(self.FRAMES[3], text="Opens By")
-        self.crit5Label = Label(self.FRAMES[4], text="Closes After")
-        self.crit6Label = Label(self.FRAMES[5], text="Location")
-        self.crit7Label = Label(self.FRAMES[6], text= "Approxiate Price range")
+        self.critServiceLabel = Label(self.FRAMES[0], text="Type of Service")
+        self.critInOutLabel = Label(self.FRAMES[1], text="Indoor/Outdoor Facility")
+        self.critDayLabel = Label(self.FRAMES[2], text="Days of Operation")
+        self.critOpenLabel = Label(self.FRAMES[3], text="Opens By")
+        self.critCloseLabel = Label(self.FRAMES[4], text="Closes After")
+        self.critLocatedLabel = Label(self.FRAMES[5], text="Location")
+        self.critPriceLabel = Label(self.FRAMES[6], text= "Approxiate Price range")
 
         ##Images
         #loads image
@@ -77,13 +77,13 @@ class MainScreen():
 
     def Search(self):
         """Searches for locations that meet the selected criteria"""
-        self.searcher.searchCriteria(self.criteriaVar1.get(), self.criteriaVar2.get(), self.criteriaVar3.get(), self.criteriaVar4.get(), self.criteriaVar4Mer.get(), self.criteriaVar5.get(), self.criteriaVar5Mer.get(), self.criteriaVar6.get(), self.criteriaVar7.get())
+        self.searcher.searchCriteria(self.critServiceVar.get(), self.critInOutVar.get(), self.critDayVar.get(), self.critOpenNumVar.get(), self.critOpenMerVar.get(), self.critCloseNumVar.get(), self.critCloseMerVar.get(), self.critLocatedVar.get(), self.critPriceVar.get())
         self.infoFrame.currentLocation = 0 #Resets the index to 0 so we get the first result first        
         #If nothing met the criteria we disable multiple infoFrame buttons and display the no results image otherwise update infoFrame
         if (len(self.infoFrame.metCriteria) > 0):
             self.frameScrollUpdate()
             self.infoFrame.googleBut.config(state=NORMAL)
-            self.infoFrame.update(self.criteriaVar3.get())
+            self.infoFrame.update(self.critDayVar.get())
         else:
             self.infoFrame.noResults()
             self.leftButton.config(state= DISABLED)
@@ -93,13 +93,13 @@ class MainScreen():
     def scrollLeft(self):
         """Moves to the previous location that meets our criteria"""
         self.infoFrame.currentLocation -= 1
-        self.infoFrame.update(self.criteriaVar3.get())
+        self.infoFrame.update(self.critDayVar.get())
         self.frameScrollUpdate()
 
     def scrollRight(self):
         """Moves to the next location that meets our criteria"""
         self.infoFrame.currentLocation += 1
-        self.infoFrame.update(self.criteriaVar3.get())
+        self.infoFrame.update(self.critDayVar.get())
         self.frameScrollUpdate()
 
     def frameScrollUpdate(self):
@@ -121,28 +121,28 @@ class MainScreen():
         for it, frame in enumerate(self.FRAMES):
             frame.grid(row= it+1, sticky= W)
         #Criteria 1
-        self.crit1Label.grid(row=1, sticky=W, padx= (12 * self.padxMult, 170 * self.padxMult))
-        self.crit1.grid(row=2, sticky=W, padx=pX, pady= pY)
+        self.critServiceLabel.grid(row=1, sticky=W, padx= (12 * self.padxMult, 170 * self.padxMult))
+        self.critService.grid(row=2, sticky=W, padx=pX, pady= pY)
         #Criteria 2
-        self.crit2Label.grid(row=1, sticky=W, padx= pX2)
-        self.crit2.grid(row=2, sticky=W, padx=pX, pady= pY)
+        self.critInOutLabel.grid(row=1, sticky=W, padx= pX2)
+        self.critInOut.grid(row=2, sticky=W, padx=pX, pady= pY)
         #Criteria 3
-        self.crit3Label.grid(row= 1, sticky=W, padx= pX2)
-        self.crit3.grid(row=2, sticky=W, padx=pX, pady= pY)
+        self.critDayLabel.grid(row= 1, sticky=W, padx= pX2)
+        self.critDay.grid(row=2, sticky=W, padx=pX, pady= pY)
         #Criteria 4
-        self.crit4Label.grid(row= 1, columnspan= 2, sticky = W, padx= pX2)
-        self.crit4Num.grid(row= 2, sticky = W, padx=pX, pady= pY)
-        self.crit4Meridiem.grid(row=2, column=1, sticky=W, pady= pY)
+        self.critOpenLabel.grid(row= 1, columnspan= 2, sticky = W, padx= pX2)
+        self.critOpenNum.grid(row= 2, sticky = W, padx=pX, pady= pY)
+        self.critOpenMer.grid(row=2, column=1, sticky=W, pady= pY)
         #Criteria 5
-        self.crit5Label.grid(row= 1, columnspan= 2, sticky = W, padx= pX2)
-        self.crit5Num.grid(row= 2, sticky = W, padx=pX, pady= pY)
-        self.crit5Meridiem.grid(row=2, column=1, sticky=W, pady= pY)
+        self.critCloseLabel.grid(row= 1, columnspan= 2, sticky = W, padx= pX2)
+        self.critCloseNum.grid(row= 2, sticky = W, padx=pX, pady= pY)
+        self.critCloseMer.grid(row=2, column=1, sticky=W, pady= pY)
         #Criteria 6
-        self.crit6Label.grid(row= 1, sticky = W, padx= pX2)
-        self.crit6.grid(row= 2, columnspan= 2, sticky = W, padx=pX, pady= pY)
+        self.critLocatedLabel.grid(row= 1, sticky = W, padx= pX2)
+        self.critLocated.grid(row= 2, columnspan= 2, sticky = W, padx=pX, pady= pY)
         #Criteria 7
-        self.crit7Label.grid(row= 1, sticky = W, padx= pX2)
-        self.crit7.grid(row= 2, columnspan= 2, sticky = W, padx=pX, pady= pY)
+        self.critPriceLabel.grid(row= 1, sticky = W, padx= pX2)
+        self.critPrice.grid(row= 2, columnspan= 2, sticky = W, padx=pX, pady= pY)
         #InfoFrame
         self.infoFrame.display()
         self.submitButton.grid(row=8, pady=20 * self.padyMult)

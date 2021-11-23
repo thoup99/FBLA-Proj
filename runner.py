@@ -20,7 +20,7 @@ class windowManager():
         with open("config.json") as jsonData:
             configs = json.load(jsonData)
             fontData = configs["font"]
-            colorData = colors[configs["colorScheme"]]
+            colorData = getColorScheme(configs["colorScheme"])
             widgetUpdate(root, fontData, colorData)
             if (configs["autoDay"]):
                 self.mainScreen.criteriaVar3.set(getCurrentDay())
