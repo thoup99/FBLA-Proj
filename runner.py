@@ -23,7 +23,7 @@ class windowManager():
             colorData = getColorScheme(configs["colorScheme"])
             widgetUpdate(root, fontData, colorData)
             if (configs["autoDay"]):
-                self.mainScreen.criteriaVar3.set(getCurrentDay())
+                self.mainScreen.critDayVar.set(getCurrentDay())
             self.mainScreen.Search()
             
     def screenSwitcher(self):
