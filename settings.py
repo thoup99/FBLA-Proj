@@ -65,7 +65,9 @@ class Settings():
 
     def restoreDefault(self):
         setDefaults(self.root)
-        widgetUpdate(self.root)
+        with open("./config.json") as jsonData:
+            configs = json.load(jsonData)
+            widgetUpdate(self.root, configs["font"], getColorScheme(configs["colorScheme"]))
         self.loadSettings()
         
 
