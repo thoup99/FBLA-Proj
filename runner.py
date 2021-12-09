@@ -1,9 +1,9 @@
-from tkinter import *
+from tkinter import * ##documentation https://docs.python.org/3/library/tk.html
 from mainScreen import MainScreen
 from settings import Settings
 from tools import *
-from os.path import exists
-import json
+from os.path import exists ##documentation https://docs.python.org/3/library/os.html
+import json ##documentation https://docs.python.org/3/library/json.html
 
 class windowManager():
     def __init__(self, root) -> None:
