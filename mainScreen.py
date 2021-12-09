@@ -1,5 +1,5 @@
-from tkinter import *
-from PIL import ImageTk,Image ##Pillow documentation https://pillow.readthedocs.io/en/stable/
+from tkinter import * ## documentation https://docs.python.org/3/library/tk.html
+from PIL import ImageTk,Image ## documentation https://pillow.readthedocs.io/en/stable/
 from info_frame import InfoFrame
 from searcher import Searcher
 
