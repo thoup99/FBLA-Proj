@@ -1,5 +1,5 @@
-from tkinter import *
-from datetime import datetime
+from tkinter import * ## documentation https://docs.python.org/3/library/tk.html
+from datetime import datetime ## documentation https://docs.python.org/3/library/datetime.html
 
 def screenAdjFont(root):
     """Returns the recommended font size based on the screens height"""
