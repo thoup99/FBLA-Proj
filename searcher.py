@@ -1,4 +1,4 @@
-import os
+import os ##documentation https://docs.python.org/3/library/os.html
 class Searcher():
     def __init__(self, infoFrame) -> None:
         self.infoFrame = infoFrame
