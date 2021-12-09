@@ -9,7 +9,6 @@ class Settings():
         self.padyMult = padyMult
         self.previewFrame = PreviewFrame(root, 4, 2, 1, 10, padxMult, padyMult)
 
-
         #Variable Storage
         self.colorSchemeVar = StringVar()
         self.fontSelectedVar = StringVar()
@@ -32,6 +31,7 @@ class Settings():
         self.saveButton = Button(root, text="Save", command=self.saveSettings, padx= 25 * padxMult, pady= 5 * padyMult)
         self.isAutoDay = Checkbutton(root, text="Autofill Day" ,variable= self.isAutoDayVar, )
 
+        ##Updates the preview frame when a setting is changed
         self.fontSelectedVar.trace("w", self.previewUpdate)
         self.fontSizeVar.trace("w", self.previewUpdate)
         self.isBoldVar.trace("w", self.previewUpdate)
