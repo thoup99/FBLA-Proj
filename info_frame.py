@@ -1,7 +1,7 @@
-from tkinter import *
-from PIL import ImageTk,Image
-import json
-import webbrowser
+from tkinter import * ##documentation https://docs.python.org/3/library/tk.html
+from PIL import ImageTk,Image ##documentation https://pillow.readthedocs.io/en/stable/
+import json ##documentation https://docs.python.org/3/library/json.html
+import webbrowser ##documentation https://docs.python.org/3/library/webbrowser.html
 
 
 class InfoFrame():
