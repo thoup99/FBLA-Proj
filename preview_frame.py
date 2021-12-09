@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import * ##documentation https://docs.python.org/3/library/tk.html
 
 class PreviewFrame():
     def __init__(self, root, pColumn, pRow, pColumnSpan, pRowSpan, padxMult, padyMult) -> None:
